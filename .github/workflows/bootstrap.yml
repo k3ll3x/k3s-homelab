@@ -20,7 +20,13 @@ jobs:
        ansible-galaxy role install -r requirements.yml -p ./roles
 
     - name: Deploy k3s
+      if: env.secrets.SSH_PRIVATE_KEY
       run: ansible-playbook -i inventory/hosts.yml playbooks/07-bootstrap.yml \
               --extra-vars "@group_vars/secrets.yml" \
               --extra-vars "@group_vars/vault.yml" \
               --private-key ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Deploy k3s
+      run: ansible-playbook -i inventory/hosts.yml playbooks/07-bootstrap.yml \
+              --extra-vars "@group_vars/secrets.yml" \
+              --extra-vars "@group_vars/vault.yml"
