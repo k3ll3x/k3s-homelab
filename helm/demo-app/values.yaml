@@ -1,0 +1,6 @@
+image: { repository: registry.local:30080/demo-app, tag: latest }
+service: { type: ClusterIP, port: 80 }
+ingress:
+  enabled: true
+  className: traefik
+  hosts: [{ host: app.local }]

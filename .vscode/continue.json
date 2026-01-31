@@ -1,0 +1,5 @@
+{
+  "name": "traefik-debug",
+  "prompt": "Debug this Traefik IngressRoute error: {{ $SELECTION }}. Check dashboard logs and suggest middleware fixes.",
+  "description": "Fix Traefik routing issues"
+}

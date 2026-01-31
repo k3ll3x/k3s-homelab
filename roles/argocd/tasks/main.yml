@@ -1,0 +1,18 @@
+- name: Install ArgoCD
+  kubernetes.core.k8s:
+    definition:
+      - apiVersion: v1
+        kind: Namespace
+        metadata:
+          name: argocd
+      - url: https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+  kubeconfig: "{{ playbook_dir }}/kubeconfig/admin.conf"
+
+- name: Patch ArgoCD server service
+  kubernetes.core.k8s_scale:
+    api_version: v1
+    kind: Service
+    name: argocd-server
+    namespace: argocd
+    replicas: 1
+  kubeconfig: "{{ playbook_dir }}/kubeconfig/admin.conf"

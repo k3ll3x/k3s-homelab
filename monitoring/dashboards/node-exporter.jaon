@@ -1,0 +1,5 @@
+{
+  "title": "Node Exporter Full",
+  "uid": "node-exporter",
+  "labels": { "grafana_dashboard": "1" }
+}

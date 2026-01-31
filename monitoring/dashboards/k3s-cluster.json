@@ -1,0 +1,5 @@
+{
+  "title": "K3s Cluster",
+  "uid": "k3s-cluster",
+  "labels": { "grafana_dashboard": "1" }
+}

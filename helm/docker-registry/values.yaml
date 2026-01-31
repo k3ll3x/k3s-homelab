@@ -1,0 +1,12 @@
+replicaCount: 1
+image: { repository: registry, tag: "2" }
+service: { type: ClusterIP, port: 5000 }
+ingress:
+  enabled: true
+  className: traefik
+  hosts:
+    - host: registry.local
+      paths: [{ path: /, pathType: Prefix }]
+persistence:
+  enabled: true
+  size: 10Gi

@@ -1,0 +1,19 @@
+prometheusOperator:
+  create: true
+grafana:
+  enabled: true
+  adminPassword: "homelab123"
+  persistence:
+    enabled: true
+    size: 5Gi
+  ingress:
+    enabled: true
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    hosts: [{ host: grafana.local }]
+prometheus:
+  ingress:
+    enabled: true
+    hosts: [{ host: prometheus.local }]
+alertmanager:
+  enabled: false

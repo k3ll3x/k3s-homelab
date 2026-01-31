@@ -1,0 +1,37 @@
+stages:
+  - bootstrap
+  - build
+  - deploy
+
+variables:
+  REGISTRY: "registry.local:30080"
+
+bootstrap:
+  stage: bootstrap
+  image: python:3.11
+  before_script:
+    - pip install ansible
+  script:
+    - ansible-playbook -i inventory/hosts.yml playbooks/05-bootstrap.yml
+  rules:
+    - changes:
+      - playbooks/**/*
+      - inventory/**/*
+
+build:
+  stage: build
+  image: docker:24
+  services:
+    - docker:24-dind
+  script:
+    - docker login $REGISTRY -u $REGISTRY_USER -p $REGISTRY_PASS
+    - docker build -t $REGISTRY/demo:${CI_COMMIT_SHA} .
+    - docker push $REGISTRY/demo:${CI_COMMIT_SHA}
+
+deploy:
+  stage: deploy
+  image: alpine/helm:3.14
+  script:
+    - helm upgrade --install demo-app ./helm/demo-app \
+        --set image.tag=$CI_COMMIT_SHA
+  environment: production

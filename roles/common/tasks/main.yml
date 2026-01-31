@@ -1,0 +1,17 @@
+- name: Install prerequisites
+  apt:
+    pkg:
+      - curl
+      - ca-certificates
+      - apt-transport-https
+    state: present
+    update_cache: yes
+
+- name: Disable swap
+  systemd:
+    name: swap
+    enabled: false
+    state: stopped
+
+- name: Install python for ansible
+  raw: test -e /usr/bin/python3 || (apt update && apt install -y python3)

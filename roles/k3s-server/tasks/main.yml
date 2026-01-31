@@ -1,0 +1,20 @@
+- name: Install k3s server
+  shell: |
+    curl -sfL https://get.k3s.io | sh -s - {{ k3s_server_args }} \
+      --token {{ k3s_token }} \
+      --write-kubeconfig-mode 644 server
+  args:
+    creates: /usr/local/bin/k3s
+
+- name: Copy kubeconfig
+  fetch:
+    src: /etc/rancher/k3s/k3s.yaml
+    dest: "{{ playbook_dir }}/kubeconfig/admin.conf"
+    flat: yes
+  run_once: true
+
+- name: Enable k3s service
+  systemd:
+    name: k3s
+    enabled: yes
+    state: started

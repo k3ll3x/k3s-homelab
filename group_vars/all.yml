@@ -1,0 +1,26 @@
+# Cluster configuration
+k3s_version: "v1.31.5+k3s1"
+cluster_cidr: "10.42.0.0/16"
+service_cidr: "10.43.0.0/16"
+cluster_domain: "cluster.local"
+
+# Services
+registry_domain: "registry.local"
+registry_port: 30080
+traefik_dashboard_domain: "traefik.local"
+grafana_domain: "grafana.local"
+prometheus_domain: "prometheus.local"
+argocd_domain: "argocd.local"
+app_domain: "app.local"
+
+# k3s server args
+k3s_server_args: |
+  --write-kubeconfig-mode 644
+  --cluster-cidr {{ cluster_cidr }}
+  --service-cidr {{ service_cidr }}
+  --disable traefik
+  --disable servicelb
+  --node-ip {{ node_ip }}
+
+k3s_agent_args: |
+  --node-ip {{ node_ip }}

@@ -1,0 +1,6 @@
+---
+dependencies:
+  - name: kubernetes.core
+  - name: community.docker
+  - src: https://github.com/rlex/ansible-role-k3s/archive/main.tar.gz
+    name: k3s

@@ -1,0 +1,17 @@
+- name: Deploy Traefik
+  hosts: k3s_server
+  tasks:
+    - name: Add Traefik Helm repo
+      kubernetes.core.helm_repository:
+        name: traefik
+        repo_url: https://traefik.github.io/charts
+      kubeconfig: "{{ playbook_dir }}/kubeconfig/admin.conf"
+
+    - name: Deploy Traefik
+      kubernetes.core.helm:
+        name: traefik
+        chart_ref: traefik/traefik
+        namespace: traefik-system
+        create_namespace: true
+        values: "{{ lookup('file', '../helm/traefik/values.yaml') | from_yaml }}"
+        kubeconfig: "{{ playbook_dir }}/kubeconfig/admin.conf"

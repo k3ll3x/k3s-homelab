@@ -1,0 +1,4 @@
+apiVersion: v2
+name: docker-registry
+description: Private Docker registry
+version: 0.1.0

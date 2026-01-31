@@ -1,0 +1,4 @@
+vault_pass
+*.retry
+kubeconfig/admin.conf
+.group_vars/secrets.yml.rekey

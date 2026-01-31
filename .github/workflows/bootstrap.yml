@@ -1,0 +1,19 @@
+name: Bootstrap k3s Cluster
+on: 
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths: [ 'playbooks/**', 'inventory/**', 'roles/**' ]
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Deploy k3s
+      run: |
+        ansible-galaxy install -r requirements.yml
+        ansible-playbook -i inventory/hosts.yml playbooks/05-bootstrap.yml \
+          --extra-vars "@group_vars/vault.yml" \
+          --private-key ${{ secrets.SSH_PRIVATE_KEY }}

@@ -1,0 +1,14 @@
+- name: Configure containerd registries
+  hosts: k3s_cluster
+  become: true
+  tasks:
+    - name: Deploy registries.yaml
+      template:
+        src: ../manifests/registries.yaml.j2
+        dest: /etc/rancher/k3s/registries.yaml
+      notify: restart k3s
+  handlers:
+    - name: restart k3s
+      systemd:
+        name: "{{ 'k3s-agent' if inventory_hostname in groups['k3s_agent'] else 'k3s' }}"
+        state: restarted

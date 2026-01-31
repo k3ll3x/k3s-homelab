@@ -1,0 +1,11 @@
+- name: Deploy ArgoCD
+  hosts: k3s_server
+  tasks:
+    - name: Deploy ArgoCD
+      kubernetes.core.helm:
+        name: argocd
+        chart_ref: argocd/argo-cd
+        namespace: argocd
+        create_namespace: true
+        values: "{{ lookup('file', '../helm/argocd/values.yaml') | from_yaml }}"
+        kubeconfig: "{{ playbook_dir }}/kubeconfig/admin.conf"

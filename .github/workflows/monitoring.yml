@@ -1,0 +1,15 @@
+name: Monitoring Health Check
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check services
+      run: |
+        curl -f https://grafana.local/api/health || exit 1
+        curl -f http://prometheus.local/-/ready || exit 1
+        curl -f http://registry.local/v2/ || exit 1
