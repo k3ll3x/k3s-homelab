@@ -32,9 +32,7 @@ jobs:
 
     - name: Deploy k3s
       run: ansible-playbook -i inventory/hosts.yml playbooks/07-bootstrap.yml \
-              --extra-vars "@group_vars/all.yml" \
-              --extra-vars "@group_vars/secrets.yml" \
-              --extra-vars "@group_vars/vault.yml" #\
+              --extra-vars "@group_vars/all.yml @group_vars/secrets.yml @group_vars/vault.yml" #\
 #              --private-key ${{ secrets.SSH_PRIVATE_KEY }}
 
 #      if: env.secrets.SSH_PRIVATE_KEY != ''
