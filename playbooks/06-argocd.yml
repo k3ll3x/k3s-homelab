@@ -8,4 +8,5 @@
         namespace: argocd
         create_namespace: true
         values: "{{ lookup('file', '../helm/argocd/values.yaml') | from_yaml }}"
-        kubeconfig: "{{ playbook_dir }}/kubeconfig/admin.conf"
+      environment:
+        KUBECONFIG: "{{ playbook_dir }}/kubeconfig/admin.conf"
