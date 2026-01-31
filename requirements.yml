@@ -1,6 +1,41 @@
 ---
-dependencies:
+# Ansible Galaxy Collections
+collections:
   - name: kubernetes.core
+    version: ">=2.4.0"
+    source: https://galaxy.ansible.com
   - name: community.docker
-  - src: https://github.com/rlex/ansible-role-k3s/archive/main.tar.gz
-    name: k3s
+    version: ">=3.4.0"
+    source: https://galaxy.ansible.com
+  - name: community.crypto
+    version: ">=2.0.0"
+    source: https://galaxy.ansible.com
+
+# Ansible Galaxy Roles  
+roles:
+  # k3s installation role
+  - name: rlex.k3s
+    version: ">=4.0.0"
+    source: https://galaxy.ansible.com
+  # Common Linux hardening
+  - name: geerlingguy.security
+    version: ">=5.3.0"
+  # Docker installation
+  - name: geerlingguy.docker
+    version: ">=7.2.0"
+  # NTP/Chrony for cluster sync
+  - name: geerlingguy.ntp
+    version: ">=3.2.0"
+  # Fail2ban for security
+  - name: geerlingguy.fail2ban
+    version: ">=5.2.0"
+
+# Git repository roles (custom)
+  - src: https://github.com/rlex/ansible-role-k3s.git
+    scm: git
+    version: main
+    name: custom-k3s
+  - src: https://github.com/geerlingguy/ansible-role-docker.git
+    scm: git
+    version: master
+    name: docker-dev
