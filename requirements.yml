@@ -19,8 +19,6 @@ roles:
   - name: geerlingguy.docker
   # NTP/Chrony for cluster sync
   - name: geerlingguy.ntp
-  # Fail2ban for security
-  - name: geerlingguy.fail2ban
 
 # Git repository roles (custom)
   - src: https://github.com/rlex/ansible-role-k3s.git
