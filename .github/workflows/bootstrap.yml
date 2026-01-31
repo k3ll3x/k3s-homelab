@@ -18,11 +18,8 @@ jobs:
     - name: Install Ansible dependencies
       run: ansible-galaxy collection install -r requirements.yml &&
        ansible-galaxy role install -r requirements.yml -p ./roles &&
-       ansible-playbook -i inventory/hosts.yml playbooks/05-bootstrap.yml \
-              --extra-vars "@group_vars/vault.yml" \
-              --private-key ${{ secrets.SSH_PRIVATE_KEY }}
 
     - name: Deploy k3s
-      run: ansible-playbook playbooks/07-bootstrap.yml
+      run: ansible-playbook -i inventory/hosts.yml playbooks/07-bootstrap.yml \
               --extra-vars "@group_vars/vault.yml" \
               --private-key ${{ secrets.SSH_PRIVATE_KEY }}
