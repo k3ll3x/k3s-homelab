@@ -1,6 +1,6 @@
-- import_playbook: 01-prereqs.yml     --extra-vars "@group_vars/secrets.yml @group_vars/vault.yml"
-- import_playbook: 02-k3s-cluster.yml --extra-vars "@group_vars/secrets.yml @group_vars/vault.yml"
-- import_playbook: 03-registries.yml  --extra-vars "@group_vars/secrets.yml @group_vars/vault.yml"
-- import_playbook: 04-traefik.yml     --extra-vars "@group_vars/secrets.yml @group_vars/vault.yml"
-- import_playbook: 05-monitoring.yml  --extra-vars "@group_vars/secrets.yml @group_vars/vault.yml"
-- import_playbook: 06-argocd.yml      --extra-vars "@group_vars/secrets.yml @group_vars/vault.yml"
+- import_playbook: 01-prereqs.yml
+- import_playbook: 02-k3s-cluster.yml
+- import_playbook: 03-registries.yml
+- import_playbook: 04-traefik.yml
+- import_playbook: 05-monitoring.yml
+- import_playbook: 06-argocd.yml
