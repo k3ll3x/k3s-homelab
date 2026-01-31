@@ -11,10 +11,13 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Setup vault password
+    - name: Setup Secrets and Vault
       env:
         ANSIBLE_VAULT_PASSWORD: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
       run: echo "$ANSIBLE_VAULT_PASSWORD" > vault_pass
+
+    - name: Check local repo
+      run: pwd && ls -lah
 
     - name: Deploy k3s
       run: |
@@ -28,10 +31,11 @@ jobs:
 #      run: ansible-playbook -i inventory/hosts.yml playbooks/07-bootstrap.yml
 
     - name: Deploy k3s
-#      if: env.secrets.SSH_PRIVATE_KEY != ''
       run: ansible-playbook -i inventory/hosts.yml playbooks/07-bootstrap.yml \
-#              --vault-password-file vault_pass \
               --extra-vars "@group_vars/all.yml" \
               --extra-vars "@group_vars/secrets.yml" \
               --extra-vars "@group_vars/vault.yml" #\
 #              --private-key ${{ secrets.SSH_PRIVATE_KEY }}
+
+#      if: env.secrets.SSH_PRIVATE_KEY != ''
+#              --vault-password-file vault_pass \
