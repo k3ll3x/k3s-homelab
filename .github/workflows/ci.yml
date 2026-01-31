@@ -8,14 +8,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
-    
+
     - name: Login to registry.local
       run: |
         echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login registry.local:30080 -u ${{ secrets.REGISTRY_USER }} --password-stdin
-    
+
     - name: Build and push demo app
       uses: docker/build-push-action@v5
       with:
