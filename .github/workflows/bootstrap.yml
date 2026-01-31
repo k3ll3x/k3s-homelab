@@ -16,8 +16,8 @@ jobs:
         ansible-galaxy install -r requirements.yml
 
     - name: Install Ansible dependencies
-      run: ansible-galaxy collection install -r requirements.yml
-       ansible-galaxy role install -r requirements.yml -p ./roles
+      run: ansible-galaxy collection install -r requirements.yml &&
+       ansible-galaxy role install -r requirements.yml -p ./roles &&
        ansible-playbook -i inventory/hosts.yml playbooks/05-bootstrap.yml \
               --extra-vars "@group_vars/vault.yml" \
               --private-key ${{ secrets.SSH_PRIVATE_KEY }}
