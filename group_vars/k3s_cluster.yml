@@ -1,7 +1,0 @@
-k3s_server_args: |
-  --write-kubeconfig-mode 644
-  --cluster-cidr {{ cluster_cidr }}
-  --service-cidr {{ service_cidr }}
-  --disable traefik
-k3s_agent_args: |
-  --node-ip {{ node_ip }}
