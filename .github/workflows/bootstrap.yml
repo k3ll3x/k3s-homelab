@@ -19,20 +19,17 @@ jobs:
     - name: Check local repo
       run: pwd && ls -lah && ls -lah group_vars
 
-    - name: Deploy k3s
-      run: |
-        ansible-galaxy install -r requirements.yml
-
     - name: Install Ansible dependencies
       run: ansible-galaxy collection install -r requirements.yml &&
        ansible-galaxy role install -r requirements.yml -p ./roles
 
-#    - name: Deploy k3s
-#      run: ansible-playbook -i inventory/hosts.yml playbooks/07-bootstrap.yml
-
-    - name: Deploy k3s
+    - name: Check Bootstrap Playbook Syntax and List Tasks
       run: ansible-playbook -i inventory/hosts.yml playbooks/07-bootstrap.yml --syntax-check --list-tasks -vv
-      
+
+    - name: Run Bootstrap Playbook
+      run: ansible-playbook -i inventory/hosts.yml playbooks/07-bootstrap.yml -vv \
+        --extra-vars "@group_vars/all.yml @group_vars/secrets.yml @group_vars/vault.yml"
+
       #--extra-vars "@group_vars/all.yml @group_vars/secrets.yml @group_vars/vault.yml"
 
 #      if: env.secrets.SSH_PRIVATE_KEY != ''
