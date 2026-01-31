@@ -23,7 +23,7 @@ roles:
 # Git repository roles (custom)
   - src: https://github.com/rlex/ansible-role-k3s.git
     scm: git
-    version: main
+    version: master
     name: custom-k3s
   - src: https://github.com/geerlingguy/ansible-role-docker.git
     scm: git
