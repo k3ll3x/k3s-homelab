@@ -27,8 +27,7 @@ jobs:
       run: ansible-playbook -i inventory/hosts.yml playbooks/07-bootstrap.yml --syntax-check --list-tasks -vv
 
     - name: Run Bootstrap Playbook
-      run: ansible-playbook -i inventory/hosts.yml playbooks/07-bootstrap.yml -vv \
-        --extra-vars "@group_vars/all.yml @group_vars/secrets.yml @group_vars/vault.yml"
+      run: ansible-playbook -i inventory/hosts.yml playbooks/07-bootstrap.yml -vv
 
       #--extra-vars "@group_vars/all.yml @group_vars/secrets.yml @group_vars/vault.yml"
 
