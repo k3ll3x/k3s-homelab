@@ -1,0 +1,13 @@
+replicaCount: 1
+image:
+  repository: ollama/ollama
+  tag: latest
+service:
+  type: ClusterIP
+  port: 11434
+nodeSelector:
+  llm-ready: "true"
+resources:
+  limits:
+    cpu: "2000m"
+    memory: "4Gi"

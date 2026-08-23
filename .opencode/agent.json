@@ -1,0 +1,5 @@
+{
+  "name": "homelab-agent",
+  "description": "Automates node power, k3s deployment, and LLM scaling",
+  "tools": ["ansible", "helm", "kubectl"]
+}

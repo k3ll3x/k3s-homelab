@@ -1,0 +1,5 @@
+- name: Trigger ESP32 Power Node
+  uri:
+    url: "http://{{ esp32_ip }}/node/{{ node_id }}?state={{ state }}"
+    method: POST
+  delegate_to: localhost
