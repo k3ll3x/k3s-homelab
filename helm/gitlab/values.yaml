@@ -1,0 +1,17 @@
+replicaCount: 1
+gitlab:
+  webservice:
+    enabled: true
+  sidekiq:
+    enabled: true
+  postgresql:
+    install: true
+  redis:
+    install: true
+  minio:
+    install: true
+  # Add resource constraints for low-power laptops
+  resources:
+    limits:
+      memory: 2Gi
+      cpu: "1000m"

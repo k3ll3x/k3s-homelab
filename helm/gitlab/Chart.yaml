@@ -1,0 +1,8 @@
+apiVersion: v2
+name: gitlab
+version: 0.1.0
+description: A lightweight GitLab instance for the cluster
+dependencies:
+  - name: gitlab
+    version: 7.x.x
+    repository: https://charts.gitlab.io/

@@ -1,0 +1,37 @@
+replicaCount: 1
+image: kasmweb/arch-desktop:1.15.0
+service:
+  type: ClusterIP
+  port: 6901
+securityContext:
+  privileged: true
+resources:
+  limits:
+    memory: 2Gi
+    cpu: "1000m"
+# The Admin Container is now the Toolbox.
+# It includes pre-installed desktop + necessary automation tools.
+# We mount Kubeconfig to make it a full control center.
+volumeMounts:
+  - name: kubeconfig
+    mountPath: /root/.kube/config
+  - name: webcam
+    mountPath: /dev/video0
+  - name: usb-devices
+    mountPath: /dev/bus/usb
+volumes:
+  - name: kubeconfig
+    hostPath:
+      path: /etc/rancher/k3s/k3s.yaml
+  - name: webcam
+    hostPath:
+      path: /dev/video0
+  - name: usb-devices
+    hostPath:
+      path: /dev/bus/usb
+configMaps:
+  - name: dev-config
+    mountPath: /home/kasm_user/.config
+nodeSelector:
+  llm-ready: "true"
+

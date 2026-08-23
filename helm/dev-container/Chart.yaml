@@ -1,0 +1,4 @@
+apiVersion: v2
+name: dev-container
+version: 0.1.0
+description: Arch dev container with i3wm and hardware access
