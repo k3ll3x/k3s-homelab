@@ -1,0 +1,13 @@
+- name: Install Admin Dev Container
+  hosts: k3s_server
+  tasks:
+    - name: Deploy dev-container helm chart
+      kubernetes.core.helm:
+        name: admin-dev
+        chart_ref: ./helm/dev-container
+        state: present
+        namespace: admin
+        create_namespace: true
+        values: "{{ lookup('file', '../helm/dev-container/values.yaml') | from_yaml }}"
+      environment:
+        KUBECONFIG: "{{ playbook_dir }}/kubeconfig/admin.conf"

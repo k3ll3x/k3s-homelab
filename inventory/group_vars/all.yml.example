@@ -1,0 +1,8 @@
+# Global Users Definition - Example
+users:
+  - name: atrahasis
+    groups: sudo
+    ssh_key: "ssh-ed25519 AAAAC3Nza... user@laptop"
+  - name: example_user
+    groups: sudo
+    ssh_key: "ssh-ed25519 AAAAC3Nza... example@desktop"
