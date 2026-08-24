@@ -1,17 +1,17 @@
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: traefik-dashboard
-  namespace: kube-system
+  name: webstore
+  namespace: store
 spec:
   entryPoints:
     - web
     - websecure
   routes:
-    - match: Host(`traefik.local`)
+    - match: Host(`store.local`)
       kind: Rule
       services:
-        - name: api@internal
-          kind: TraefikService
+        - name: webstore
+          port: 5000
   tls:
     secretName: traefik-default-cert

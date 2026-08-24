@@ -27,4 +27,5 @@ spec:
       services:
         - name: dev-container
           port: 3000
-  tls: {}
+  tls:
+    secretName: traefik-default-cert
