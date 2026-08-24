@@ -1,5 +1,7 @@
 vault_pass
 *.retry
 *kubeconfig/admin.conf
+kubeconfig/
+playbooks/kubeconfig/
 .group_vars/secrets.yml.rekey
 inventory/hosts.yml
