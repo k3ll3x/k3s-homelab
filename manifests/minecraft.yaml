@@ -18,6 +18,22 @@ spec:
       labels:
         app: minecraft-server
     spec:
+      initContainers:
+        - name: init-whitelist
+          image: busybox:1.36
+          command:
+            - /bin/sh
+            - -c
+            - |
+              cat > /data/whitelist.json << 'JSON'
+              [{"uuid":"b5d7980e-1dd9-3dfc-8176-b327d09c87e4","name":"nuvhandra"}]
+              JSON
+              cat > /data/ops.json << 'JSON'
+              [{"uuid":"b5d7980e-1dd9-3dfc-8176-b327d09c87e4","name":"nuvhandra","level":4,"bypassesPlayerLimit":false}]
+              JSON
+          volumeMounts:
+            - mountPath: /data
+              name: data
       containers:
         - name: minecraft
           image: itzg/minecraft-server:latest
@@ -30,10 +46,6 @@ spec:
               value: "2G"
             - name: ONLINE_MODE
               value: "FALSE"
-            - name: OVERRIDE_OPS
-              value: "nuvhandra=b5d7980e-1dd9-3dfc-8176-b327d09c87e4"
-            - name: OVERRIDE_WHITELIST
-              value: "nuvhandra=b5d7980e-1dd9-3dfc-8176-b327d09c87e4"
             - name: ENABLE_WHITELIST
               value: "TRUE"
           ports:

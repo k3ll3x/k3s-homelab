@@ -1,44 +1,34 @@
-# Homelab Documentation: Master Node & Power Management
+# Homelab: k3s Cluster Access & Apps
 
-## 1. Laptop BIOS / UEFI "Power On AC" Configuration
-To allow remote power-on via the ESP32 relay system without pressing the physical power button:
-1. Boot the laptop and press `F10` (or `ESC` -> `F10`) during startup to enter BIOS Setup.
-2. Go to **Advanced** > **Power Management Options** (or **Startup** / **Boot Options**).
-3. Set **Restore on AC Power** (or **AC Power Recovery**) to **Power On**.
-4. Save settings and exit (`F10`).
-5. **Behavior**: Whenever power is supplied via the ESP32 relay, the laptop boots up automatically.
+## Architecture
+- **Master** `timemachine` - 192.168.2.94 (Debian/Bunsenlabs, control-plane, sudo)
+- **Worker** `retropad` - 192.168.2.95 (Alpine diskless, doas, /var/lib/rancher bind-mount to /media/sda2)
+- **Ingress**: k3s builtin Traefik v3 (kube-system). Uses **IngressRoute (CRD)** only - the kubernetesIngress provider is broken in this build. All app routes are CRD IngressRoutes in `manifests/`.
+- **SSH**: key-only, password auth disabled. `~/.ssh/timemachine` & `~/.ssh/retropad`. PQ warning silenced in `~/.ssh/config` (`KexAlgorithms -sntrup761x25519-sha512@openssh.com`).
 
----
-
-## 2. Automated Safe Shutdown & ESP32 Power-Off Mechanism
-A clean shutdown script runs on the master node (`/usr/local/bin/homelab-safe-shutdown.sh`) to:
-1. Check if the cluster is actively used (active Kubernetes workloads, SSH sessions, or high resource activity).
-2. Gracefully drain k3s workloads if idling.
-3. Signal the ESP32 power manager (via HTTP/MQTT request).
-4. Initiate system shutdown (`shutdown -h now`), allowing the ESP32 relay to cut power after a delay.
-
-### Script Implementation (`/usr/local/bin/homelab-safe-shutdown.sh`)
-```bash
-#!/bin/bash
-# Homelab Safe Shutdown & ESP32 Power-Off Trigger
-
-ESP32_IP="${ESP32_IP:-192.168.2.100}"
-IDLE_THRESHOLD_MINUTES=30
-
-# Check active SSH connections or load average
-ACTIVE_SSH=$(who | wc -l)
-LOAD_AVG=$(awk '{print $1}' /proc/loadavg)
-
-if [ "$ACTIVE_SSH" -gt 1 ] || (( $(echo "$LOAD_AVG > 2.0"béco 2.0" | bc -l) )); then
-    echo "Cluster active. Aborting shutdown."
-    exit 0
-fi
-
-echo "Cluster idle. Initiating graceful shutdown..."
-
-# Notify ESP32 to prepare power cutoff after delay
-curl -s -X POST "http://$ESP32_IP/poweroff" || true
-
-# Shutdown system
-sudo shutdown -h +1 "Homelab entering low-power sleep state."
+## DNS / Hosts
+Add to workstation `/etc/hosts` (or router DNS override):
 ```
+192.168.2.94 traefik.local grafana.local prometheus.local argocd.local dev.local
+```
+
+## App Access
+| App | URL | Credentials |
+|---|---|---|
+| Traefik dashboard | http://traefik.local | - |
+| Grafana | http://grafana.local | admin / homelab123 |
+| Prometheus | http://prometheus.local | - |
+| ArgoCD | http://argocd.local | admin / argocdStrongPass123! |
+| Dev container (webtop XFCE) | http://dev.local | abc / abc (VNC: devpass123) |
+| Minecraft | 192.168.2.94:25565 | offline mode, whitelist nuvhandra (op) |
+
+## Fixes Applied (historical)
+- Traefik: kubernetesIngress provider broken -> CRD IngressRoutes (`manifests/app-ingresses.yaml`, `manifests/traefik-dashboard.yaml`).
+- Duplicate helm traefik (traefik-system) removed; single builtin controller.
+- Minecraft offline mode: `OVERRIDE_*` env ignored by image -> initContainer writes `whitelist.json`/`ops.json` with offline UUID (`manifests/minecraft.yaml`).
+- kasmweb images private -> linuxserver/webtop arch-xfce.
+- Dev-container chart fixed: `_helpers.tpl` added, ConfigMap dropped (binary/name-collision) -> hostPath config mount, privileged on container level.
+
+## Security (see security-policy.md)
+- SSH: key-only, no passwords.
+- Future: VLAN 20 isolation, Traefik IPAllowList for admin apps.
