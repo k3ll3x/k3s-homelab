@@ -1,0 +1,9 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<channel name="xfce4-terminal" version="1.0">
+  <property name="color-use-theme" type="bool" value="false"/>
+  <property name="color-background-vary" type="bool" value="false"/>
+  <property name="font-use-system" type="bool" value="false"/>
+  <property name="color-foreground" type="string" value="#f6f6f5f5f4f4"/>
+  <property name="color-background" type="string" value="#000000000000"/>
+</channel>

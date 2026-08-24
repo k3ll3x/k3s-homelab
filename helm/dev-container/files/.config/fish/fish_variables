@@ -1,0 +1,8 @@
+# This file contains fish universal variable definitions.
+# VERSION: 3.0
+SETUVAR --export AI_API_KEY:ICAgICAgICAiYXBpS2V5IjogImV5SmhiR2NpT2lKSVV6STFOaUlzSW5SNWNDSTZJa3BYVkNKOS5leUpwWkNJNkltWmlZVGRsWXpjNUxUQXpaak10TkRBNU1TMDRPRFEzTFdFek5XUTJaR1JoTkRVd01DSXNJbVY0Y0NJNk1UYzROalExTWprMU1pd2lhblJwSWpvaU5tUTBOV1U1T0dNdFltRTRPQzAwTm1FekxUa3dNak10WXpKbVpqbGhNamd4WW1Gaklpd2lhV0YwSWpveE56ZzBNRE16TnpVeWZRLmNQZjh3M19oWTM2cVIzRXZlQnQxWjZtZTJJNnVrd0pGNnU1bVNrZ0JlZUUiLAo\x3d
+SETUVAR --export API_URL:https\x3a//chat\x2eexxeta\x2einfo/api/v1/
+SETUVAR __fish_initialized:4300
+SETUVAR _fisher_patrickf1_2F_fzf_2E_fish_files:\x7e/\x2econfig/fish/functions/_fzf_configure_bindings_help\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_extract_var_info\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_preview_changed_file\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_preview_file\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_report_diff_type\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_report_file_type\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_search_directory\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_search_git_log\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_search_git_status\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_search_history\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_search_processes\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_search_variables\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_wrapper\x2efish\x1e\x7e/\x2econfig/fish/functions/fzf_configure_bindings\x2efish\x1e\x7e/\x2econfig/fish/conf\x2ed/fzf\x2efish\x1e\x7e/\x2econfig/fish/completions/fzf_configure_bindings\x2efish
+SETUVAR _fisher_plugins:patrickf1/fzf\x2efish
+SETUVAR _fisher_upgraded_to_4_4:\x1d

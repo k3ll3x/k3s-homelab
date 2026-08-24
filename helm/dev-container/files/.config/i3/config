@@ -1,1 +1,213 @@
-# i3 config
+# Supah Dupah i3 config
+
+exec_always autorandr --change
+
+#window gaps
+gaps inner 10
+gaps outer 22
+
+# set modifier
+set $super Mod4
+set $alt Mod1
+
+# set font
+font pango: Terminus 14
+
+# Use Mouse+$super to drag floating windows to their wanted position
+floating_modifier $super
+
+#autostart
+exec --no-startup-id xset s off
+exec --no-startup-id xset s noblank
+exec --no-startup-id xset -dpms
+exec --no-startup-id hsetroot -fill ~/.wallpaper.jpg &
+exec --no-startup-id xsettingsd &
+exec --no-startup-id nm-applet &
+exec --no-startup-id compton -b &
+exec --no-startup-id redshift-gtk
+
+#pomodoro
+bindsym $super+Shift+p exec notify-send "killing pomodoro" && killall pomodoro.py
+bindsym $super+p exec /home/nuvhandra/Documents/dev/python/scripts/pomodoro.py
+
+#virtual keyboard
+bindsym $super+k exec /home/nuvhandra/3p/svkbd-0.4.2/svkbd-mobile-intl -d -H 25
+bindsym $super+Shift+k exec killall svkbd-mobile-intl
+
+#Obsidian
+bindsym $super+Shift+o exec obsidian
+
+#xrefresh
+bindsym $super+Shift+z exec xrefresh
+
+#poweroff
+bindsym $super+Shift+Delete exec poweroff
+
+#screen flip
+bindsym $super+$alt+i exec xrandr -o inverted
+bindsym $super+$alt+n exec xrandr -o normal
+bindsym $super+$alt+Left exec xrandr -o left
+bindsym $super+$alt+Right exec xrandr -o right
+
+#xkill
+bindsym Shift+$super+x exec i3-sensible-terminal -e xkill
+
+#alsamixer
+bindsym $super+a exec i3-sensible-terminal -e alsamixer
+
+#htop
+bindsym $super+Shift+h exec i3-sensible-terminal -e htop
+
+# start a terminal
+#bindsym $super+Return exec i3-sensible-terminal
+bindsym $super+Return exec ghostty
+
+# start dmenu (a program launcher)
+bindsym $super+Shift+d exec i3-dmenu-desktop --dmenu="dmenu -i -fn 'Terminus:size=14'"
+bindsym $super+d exec rofi -lines 12 -padding 18 -width 60 -location 0 -show drun -sidebar-mode -columns 3 -font 'Terminus 14'
+
+# common apps keybinds
+bindsym Print exec scrot 'scrot_%a-%d%b%y_%H.%M.png' -e 'viewnior ~/$f'
+bindsym $super+Shift+l exec i3lock -i ~/.wallpaper.jpg
+bindsym $super+w exec firefox
+bindsym $super+Shift+f exec thunar;focus
+bindsym $super+Shift+g exec geany;focus
+
+#change volume
+bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+
+bindsym XF86AudioLowerVolume exec amixer -q set Master 5%-
+bindsym XF86AudioMute exec amixer set Master toggle
+
+# music control
+bindsym XF86AudioNext exec mpc next
+bindsym XF86AudioPrev exec mpc prev
+bindsym XF86AudioPlay exec mpc toggle
+bindsym XF86AudioStop exec mpc stop
+
+# kill focused window
+bindsym $super+c kill
+bindsym $alt+F4 kill
+
+# change focus
+bindsym $super+Left focus left
+bindsym $super+Down focus down
+bindsym $super+Up focus up
+bindsym $super+Right focus right
+
+# move focused window
+bindsym $super+Shift+Left move left
+bindsym $super+Shift+Down move down
+bindsym $super+Shift+Up move up
+bindsym $super+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $super+h split h
+
+# split in vertical orientation
+bindsym $super+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $super+f fullscreen toggle
+
+# change container layout split
+bindsym $super+s layout toggle split
+bindsym $super+Shift+s layout stacking
+bindsym $super+Shift+t layout tabbed
+
+# toggle tiling / floating
+bindsym $super+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $super+Shift+space focus mode_toggle
+
+#sticky window
+bindsym $super+m sticky toggle
+
+#desktop variables
+set $d1 1:•
+set $d2 2:••
+set $d3 3:❙
+set $d4 4:❙•
+set $d5 5:❙••
+set $d6 6:❙❙
+set $d7 7:❙❙•
+set $d8 8:❙❙••
+set $d9 9:△
+
+# switch to workspace
+bindsym $alt+Control+Right workspace next
+bindsym $alt+Control+Left workspace prev
+bindsym $super+1 workspace $d1
+bindsym $super+2 workspace $d2
+bindsym $super+3 workspace $d3
+bindsym $super+4 workspace $d4
+bindsym $super+5 workspace $d5
+bindsym $super+6 workspace $d6
+bindsym $super+7 workspace $d7
+bindsym $super+8 workspace $d8
+bindsym $super+9 workspace $d9
+
+# move focused container to workspace
+bindsym $super+Shift+1 move container to workspace $d1
+bindsym $super+Shift+2 move container to workspace $d2
+bindsym $super+Shift+3 move container to workspace $d3
+bindsym $super+Shift+4 move container to workspace $d4
+bindsym $super+Shift+5 move container to workspace $d5
+bindsym $super+Shift+6 move container to workspace $d6
+bindsym $super+Shift+7 move container to workspace $d7
+bindsym $super+Shift+8 move container to workspace $d8
+bindsym $super+Shift+9 move container to workspace $d9
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $super+Shift+r restart
+
+# exit i3
+bindsym $super+q exec "i3-nagbar -t warning -m 'Really, exit?' -b 'Yes' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        bindsym Left resize shrink width 5 px or 5 ppt
+        bindsym Down resize grow height 5 px or 5 ppt
+        bindsym Up resize shrink height 5 px or 5 ppt
+        bindsym Right resize grow width 5 px or 5 ppt
+        bindsym Return mode "default"
+}
+
+bindsym $super+r mode "resize"
+
+# panel
+bar {
+	strip_workspace_numbers yes
+  colors {
+    background #2f343f
+    statusline #2f343f
+    separator #4b5262
+
+    # colour of border, background, and text
+    focused_workspace       #2f343f #bf616a #d8dee8
+    active_workspace        #2f343f #2f343f #d8dee8
+    inactive_workspace      #2f343f #2f343f #d8dee8
+    urgent_workspacei       #2f343f #ebcb8b #2f343f
+  }
+  status_command i3status
+  #tray_output primary
+}
+
+# window rules, you can find the window class using xprop
+for_window [class=".*"] border pixel 4
+assign [class=Terminal] $d1
+assign [class=Firefox|Transmission-gtk] $d2
+assign [class=Geany|Evince|Gucharmap|Soffice|libreoffice*] $d3
+assign [class=Audacity|Vlc|mpv|Ghb|Xfburn|Gimp*|Inkscape] $d4
+assign [class=Lxappearance|System-config-printer.py|Lxtask|GParted|Pavucontrol|Exo-helper*|Lxrandr|Arandr] $d5
+for_window [class=Viewnior|feh|Audacious|File-roller|Lxappearance|Lxtask|Pavucontrol|xpad|XTerm] floating enable
+for_window [class=Terminal|Firefox|Geany|Evince|Soffice|libreoffice*|mpv|Ghb|Xfburn|Gimp*|Inkscape|Vlc|Lxappearance|Audacity] focus
+for_window [class=Xfburn|GParted|System-config-printer.py|Lxtask|Pavucontrol|Exo-helper*|Lxrandr|Arandr] focus
+
+# colour of border, background, text, indicator, and child_border
+client.focused              #bf616a #2f343f #d8dee8 #bf616a #d8dee8
+client.focused_inactive     #2f343f #2f343f #d8dee8 #2f343f #2f343f
+client.unfocused            #2f343f #2f343f #d8dee8 #2f343f #2f343f
+client.urgent               #2f343f #2f343f #d8dee8 #2f343f #2f343f
+client.placeholder          #2f343f #2f343f #d8dee8 #2f343f #2f343f
+client.background           #2f343f

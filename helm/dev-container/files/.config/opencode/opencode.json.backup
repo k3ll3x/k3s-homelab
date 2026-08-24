@@ -1,0 +1,112 @@
+{
+	"$schema": "https://opencode.ai/config.json",
+	"provider": {
+		"ollama": {
+			"options": {
+				"baseURL": "http://localhost:11434/v1"
+			},
+			"models": {
+				"deepseek-r1:latest": {
+					"tools": true,
+					"tool_call": true,
+					"limit": {
+						"context": 32768,
+						"output": 4096
+					}
+				},
+				"dolphin3:latest": {
+					"tools": true,
+					"tool_call": true,
+					"limit": {
+						"context": 32768,
+						"output": 4096
+					}
+				},
+				"delfino:latest": {
+					"tools": true,
+					"tool_call": true,
+					"limit": {
+						"context": 32768,
+						"output": 4096
+					}
+				},
+				"qwen3:latest": {
+					"tools": true,
+					"tool_call": true,
+					"limit": {
+						"context": 32768,
+						"output": 4096
+					}
+				},
+				"gemma3:latest": {
+					"tools": true,
+					"tool_call": true,
+					"limit": {
+						"context": 32768,
+						"output": 4096
+					}
+				},
+				"qwen2.5:3b": {
+					"tools": true,
+					"tool_call": true,
+					"limit": {
+						"context": 32768,
+						"output": 4096
+					}
+				}
+			}
+		}
+	},
+	"skills": {
+		"paths": [
+			"~/.config/opencode/skill"
+		]
+	},
+	"mcp": {
+		"filesystem": {
+			"type": "local",
+			"command": [
+				"opencode",
+				"x",
+				"@modelcontextprotocol/server-filesystem"
+			]
+		},
+		"sequential": {
+			"type": "local",
+			"command": [
+				"opencode",
+				"x",
+				"@modelcontextprotocol/server-sequential-thinking"
+			]
+		},
+		"godot-ai": {
+			"command": [
+				"/usr/bin/uvx",
+				"--link-mode",
+				"copy",
+				"--from",
+				"godot-ai==3.1.5",
+				"godot-ai",
+				"attach",
+				"--port",
+				"8000",
+				"--ws-port",
+				"9500"
+			],
+			"type": "local",
+			"enabled": true
+		},
+		"sqlite": {
+			"type": "local",
+			"command": [
+				"uvx",
+				"--with",
+				"mcp<2",
+				"mcp-server-sqlite",
+				"--db-path",
+				"/home/atrahasis/mcp_data.db"
+			],
+			"enabled": true
+		}
+	}
+}
