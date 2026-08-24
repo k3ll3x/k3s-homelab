@@ -49,11 +49,41 @@ public class StorePlugin extends JavaPlugin {
         saveCredits();
     }
 
-    // ---------- Whitelist helpers ----------
+    // ---------- Whitelist helpers (offline-mode UUID aware) ----------
+    private String offlineUuid(String name) {
+        try {
+            byte[] digest = java.security.MessageDigest.getInstance("MD5")
+                .digest(("OfflinePlayer:" + name).getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            StringBuilder sb = new StringBuilder();
+            for (byte b : digest) sb.append(String.format("%02x", b));
+            String hex = sb.toString();
+            return String.format("%s-%s-3%s-8%s-%s",
+                hex.substring(0, 8), hex.substring(8, 12), hex.substring(12, 15),
+                hex.substring(17, 20), hex.substring(20, 32));
+        } catch (java.security.NoSuchAlgorithmException e) {
+            return null;
+        }
+    }
+
     private void addWhitelist(String name, String uuid) {
         Bukkit.getScheduler().runTask(this, () -> {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "whitelist add " + name);
             getLogger().info("Whitelisted " + name + " (" + uuid + ")");
+            Player p = Bukkit.getPlayerExact(name);
+            if (p != null) {
+                p.kickPlayer("§aAccess granted - reconnect to join!");
+            }
+        });
+    }
+
+    private void removeWhitelist(String name) {
+        Bukkit.getScheduler().runTask(this, () -> {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "whitelist remove " + name);
+            getLogger().info("Removed whitelist " + name);
+            Player p = Bukkit.getPlayerExact(name);
+            if (p != null) {
+                p.kickPlayer("§cSubscription expired - renew at the store.");
+            }
         });
     }
 
@@ -99,7 +129,14 @@ public class StorePlugin extends JavaPlugin {
             server.createContext("/api/whitelist/add", ex -> {
                 if (!auth(ex, token)) return;
                 String name = query(ex, "name");
-                addWhitelist(name, "");
+                addWhitelist(name, offlineUuid(name));
+                json(ex, 200, "{\"ok\":true}");
+            });
+
+            server.createContext("/api/whitelist/remove", ex -> {
+                if (!auth(ex, token)) return;
+                String name = query(ex, "name");
+                removeWhitelist(name);
                 json(ex, 200, "{\"ok\":true}");
             });
 
