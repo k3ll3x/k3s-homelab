@@ -51,11 +51,10 @@ public class StorePlugin extends JavaPlugin {
 
     // ---------- Whitelist helpers ----------
     private void addWhitelist(String name, String uuid) {
-        // writes whitelist.json in the server data dir (offline-mode friendly)
-        File wl = new File(getDataFolder().getParentFile().getParentFile(), "whitelist.json");
-        // keep simple: append entry via server command if available
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "whitelist add " + name);
-        getLogger().info("Whitelisted " + name + " (" + uuid + ")");
+        Bukkit.getScheduler().runTask(this, () -> {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "whitelist add " + name);
+            getLogger().info("Whitelisted " + name + " (" + uuid + ")");
+        });
     }
 
     // ---------- HTTP API ----------
@@ -113,7 +112,7 @@ public class StorePlugin extends JavaPlugin {
     private boolean auth(com.sun.net.httpserver.HttpExchange ex, String token) {
         String h = ex.getRequestHeaders().getFirst("Authorization");
         if (h == null || !h.equals("Bearer " + token)) {
-            json(ex, 401, "{\"error\":\"unauthorized\"}");
+            try { json(ex, 401, "{\"error\":\"unauthorized\"}"); } catch (IOException ignored) {}
             return false;
         }
         return true;
