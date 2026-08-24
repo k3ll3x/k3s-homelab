@@ -10,4 +10,4 @@
         create_namespace: true
         values: "{{ lookup('file', '../helm/dev-container/values.yaml') | from_yaml }}"
       environment:
-        KUBECONFIG: "{{ playbook_dir }}/kubeconfig/admin.conf"
+        KUBECONFIG: /etc/rancher/k3s/k3s.yaml

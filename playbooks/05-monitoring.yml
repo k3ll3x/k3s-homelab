@@ -6,7 +6,7 @@
         name: prometheus-community
         repo_url: https://prometheus-community.github.io/helm-charts
       environment:
-        KUBECONFIG: "{{ playbook_dir }}/kubeconfig/admin.conf"
+        KUBECONFIG: /etc/rancher/k3s/k3s.yaml
 
     - name: Create monitoring namespace
       kubernetes.core.k8s:
@@ -15,13 +15,13 @@
         kind: Namespace
         state: present
       environment:
-        KUBECONFIG: "{{ playbook_dir }}/kubeconfig/admin.conf"
+        KUBECONFIG: /etc/rancher/k3s/k3s.yaml
 
     - name: Deploy monitoring stack
       kubernetes.core.helm:
         name: monitoring
-        chart_ref: kube-prometheus-stack/kube-prometheus-stack
+        chart_ref: prometheus-community/kube-prometheus-stack
         namespace: monitoring
         values: "{{ lookup('file', '../helm/prometheus-grafana/values.yaml') | from_yaml }}"
       environment:
-        KUBECONFIG: "{{ playbook_dir }}/kubeconfig/admin.conf"
+        KUBECONFIG: /etc/rancher/k3s/k3s.yaml

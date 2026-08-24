@@ -7,7 +7,7 @@
         name: traefik
         repo_url: https://traefik.github.io/charts
       environment:
-        KUBECONFIG: "{{ playbook_dir }}/kubeconfig/admin.conf"
+        KUBECONFIG: /etc/rancher/k3s/k3s.yaml
 
     - name: Create traefik-system namespace
       kubernetes.core.k8s:
@@ -16,7 +16,7 @@
         kind: Namespace
         state: present
       environment:
-        KUBECONFIG: "{{ playbook_dir }}/kubeconfig/admin.conf"
+        KUBECONFIG: /etc/rancher/k3s/k3s.yaml
 
     - name: Deploy Traefik Helm chart
       kubernetes.core.helm:
@@ -26,4 +26,4 @@
         create_namespace: true
         values: "{{ lookup('file', '../helm/traefik/values.yaml') | from_yaml }}"
       environment:
-        KUBECONFIG: "{{ playbook_dir }}/kubeconfig/admin.conf"
+        KUBECONFIG: /etc/rancher/k3s/k3s.yaml

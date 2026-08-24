@@ -1,6 +1,13 @@
 - name: Deploy ArgoCD
   hosts: k3s_server
   tasks:
+    - name: Add ArgoCD Helm repo
+      kubernetes.core.helm_repository:
+        name: argocd
+        repo_url: https://argoproj.github.io/argo-helm
+      environment:
+        KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+
     - name: Deploy ArgoCD
       kubernetes.core.helm:
         name: argocd
@@ -9,4 +16,4 @@
         create_namespace: true
         values: "{{ lookup('file', '../helm/argocd/values.yaml') | from_yaml }}"
       environment:
-        KUBECONFIG: "{{ playbook_dir }}/kubeconfig/admin.conf"
+        KUBECONFIG: /etc/rancher/k3s/k3s.yaml
