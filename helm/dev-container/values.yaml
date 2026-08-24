@@ -1,8 +1,9 @@
 replicaCount: 1
-image: kasmweb/arch-desktop:1.15.0
+image: lscr.io/linuxserver/webtop:arch-xfce
+vncPassword: "devpass123"
 service:
   type: ClusterIP
-  port: 6901
+  port: 3000
 securityContext:
   privileged: true
 resources:
@@ -13,13 +14,18 @@ resources:
 # It includes pre-installed desktop + necessary automation tools.
 # We mount Kubeconfig to make it a full control center.
 volumeMounts:
+  - name: config
+    mountPath: /config
   - name: kubeconfig
-    mountPath: /root/.kube/config
+    mountPath: /config/.kube/config
   - name: webcam
     mountPath: /dev/video0
   - name: usb-devices
     mountPath: /dev/bus/usb
 volumes:
+  - name: config
+    hostPath:
+      path: /home/nuvhandra/dev-container/files
   - name: kubeconfig
     hostPath:
       path: /etc/rancher/k3s/k3s.yaml
@@ -29,9 +35,6 @@ volumes:
   - name: usb-devices
     hostPath:
       path: /dev/bus/usb
-configMaps:
-  - name: dev-config
-    mountPath: /home/kasm_user/.config
 nodeSelector:
   llm-ready: "true"
 

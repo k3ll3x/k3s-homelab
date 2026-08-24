@@ -12,19 +12,18 @@ spec:
       labels:
         app: {{ include "dev-container.fullname" . }}
     spec:
-      securityContext:
-        privileged: true
       containers:
         - name: dev-container
           image: {{ .Values.image }}
+          securityContext:
+            privileged: true
+          env:
+            - name: VNC_PW
+              value: {{ .Values.vncPassword | quote }}
           ports:
             - containerPort: {{ .Values.service.port }}
           volumeMounts:
             {{- toYaml .Values.volumeMounts | nindent 12 }}
-            {{- range .Values.configMaps }}
-            - name: {{ .name }}
-              mountPath: {{ .mountPath }}
-            {{- end }}
       volumes:
         {{- toYaml .Values.volumes | nindent 8 }}
       nodeSelector:

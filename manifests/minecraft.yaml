@@ -30,10 +30,10 @@ spec:
               value: "2G"
             - name: ONLINE_MODE
               value: "FALSE"
-            - name: OPS
-              value: "nuvhandra"
-            - name: WHITELIST
-              value: "nuvhandra"
+            - name: OVERRIDE_OPS
+              value: "nuvhandra=b5d7980e-1dd9-3dfc-8176-b327d09c87e4"
+            - name: OVERRIDE_WHITELIST
+              value: "nuvhandra=b5d7980e-1dd9-3dfc-8176-b327d09c87e4"
             - name: ENABLE_WHITELIST
               value: "TRUE"
           ports:

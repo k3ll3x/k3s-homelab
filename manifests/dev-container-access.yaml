@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dev-container
+  namespace: admin
+spec:
+  type: ClusterIP
+  ports:
+    - port: 6901
+      targetPort: 6901
+      name: web
+  selector:
+    app: admin-dev
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: dev-container
+  namespace: admin
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`dev.local`)
+      kind: Rule
+      services:
+        - name: dev-container
+          port: 6901

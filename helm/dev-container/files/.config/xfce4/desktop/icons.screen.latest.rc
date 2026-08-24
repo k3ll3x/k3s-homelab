@@ -1,1 +1,15 @@
-/home/zen/.config/xfce4/desktop/icons.screen0-1904x1037.rc
+[xfdesktop-version-4.10.3+-rcfile_format]
+4.10.3+=true
+
+[/home/zen/Desktop/processes.txt]
+row=2
+col=0
+
+[/]
+row=0
+col=0
+
+[/home/zen]
+row=1
+col=0
+
