@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+<head><title>Pay with XRP</title></head>
+<body style="font-family:sans-serif;background:#111;color:#eee;text-align:center;padding:3em">
+<h2>Pay {{ amount_xrp }} XRP to activate {{ username }}</h2>
+<p>Send <b>{{ amount_xrp }} XRP</b> to wallet:</p>
+<pre style="background:#222;padding:1em;font-size:1.2em">{{ address }}</pre>
+<p>After sending, click verify (ledger check, ~5-10s):</p>
+<form method="post" action="/verify_xrp">
+  <input type="hidden" name="username" value="{{ username }}">
+  <button type="submit" style="padding:.7em 1.5em">I sent it - verify</button>
+</form>
+</body>
+</html>

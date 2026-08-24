@@ -1,0 +1,15 @@
+name: StorePlugin
+version: 1.0.0
+main: dev.homelab.store.StorePlugin
+api-version: 1.21
+commands:
+  credits:
+    description: Show your in-game credits balance
+  buy:
+    description: Buy an item with credits. Usage /buy <item>
+  setcredits:
+    description: Set credits for a player (admin)
+    permission: store.admin
+permissions:
+  store.admin:
+    default: op

@@ -1,0 +1,17 @@
+# API token - must match webstore PLUGIN_TOKEN
+api-token: "changeme"
+port: 8090
+
+# Whitelist enforcement: false = anyone can join (offline mode),
+# true = only whitelisted players can join (server whitelist must also be on)
+enforce-whitelist: false
+
+# Item shop: costs in credits
+shop:
+  diamond_sword: 50
+  diamond_pickaxe: 40
+  iron_helmet: 30
+  iron_chestplate: 45
+  elytra: 200
+  shulker_box: 150
+  golden_apple: 10

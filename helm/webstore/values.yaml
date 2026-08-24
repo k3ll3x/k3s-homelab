@@ -1,0 +1,11 @@
+image: ghcr.io/nuvhandra/homelab-webstore:latest
+replicaCount: 1
+service:
+  port: 5000
+env:
+  PAYMENT_PROVIDER: "xrp"
+  XRP_ADDRESS: ""
+  XRP_AMOUNT_DROPS: "5000000"
+  PLUGIN_URL: "http://minecraft-plugin:8090"
+  PLUGIN_TOKEN: "changeme"
+  PRICE_USD: "5.00"

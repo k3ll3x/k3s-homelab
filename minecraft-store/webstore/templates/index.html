@@ -1,0 +1,13 @@
+<!doctype html>
+<html>
+<head><title>Homelab Store</title></head>
+<body style="font-family:sans-serif;background:#111;color:#eee;text-align:center;padding:3em">
+<h1>Minecraft Monthly Access</h1>
+<p>Enter your Minecraft username (must match your launcher, offline mode)</p>
+<form method="post" action="/subscribe">
+  <input name="username" placeholder="username" required style="padding:.6em">
+  <button type="submit" style="padding:.6em 1.4em;margin-left:.5em">Buy - ${{ price }}/month</button>
+</form>
+<p style="color:#888">Payment: {{ provider }}. Includes whitelist + 100 in-game credits.</p>
+</body>
+</html>

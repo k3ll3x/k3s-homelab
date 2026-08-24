@@ -1,0 +1,4 @@
+apiVersion: v2
+name: webstore
+description: Minecraft store - payments, whitelist, credits
+version: 0.1.0
