@@ -9,6 +9,6 @@
       notify: restart k3s
   handlers:
     - name: restart k3s
-      systemd:
+      service:
         name: "{{ 'k3s-agent' if inventory_hostname in groups['k3s_agent'] else 'k3s' }}"
         state: restarted

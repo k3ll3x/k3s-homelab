@@ -5,8 +5,8 @@
   args:
     creates: /usr/local/bin/k3s-agent
 
-- name: Enable k3s-agent service
-  systemd:
+- name: Enable and start k3s-agent service
+  service:
     name: k3s-agent
     enabled: yes
     state: started
