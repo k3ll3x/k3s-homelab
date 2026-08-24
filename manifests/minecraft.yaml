@@ -43,11 +43,13 @@ spec:
             - name: TYPE
               value: "PAPER"
             - name: MEMORY
-              value: "2G"
+              value: "1G"
+            - name: MAX_MEMORY
+              value: "1G"
             - name: ONLINE_MODE
               value: "FALSE"
             - name: ENABLE_WHITELIST
-              value: "TRUE"
+              value: "FALSE"
           ports:
             - containerPort: 25565
               name: minecraft
@@ -57,6 +59,8 @@ spec:
       volumes:
         - name: data
           emptyDir: {}
+      nodeSelector:
+        capacity: high
 ---
 apiVersion: v1
 kind: Service
