@@ -6,9 +6,11 @@ metadata:
 spec:
   entryPoints:
     - web
+    - websecure
   routes:
     - match: Host(`traefik.local`)
       kind: Rule
       services:
         - name: api@internal
           kind: TraefikService
+  tls: {}

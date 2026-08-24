@@ -20,9 +20,11 @@ metadata:
 spec:
   entryPoints:
     - web
+    - websecure
   routes:
     - match: Host(`dev.local`)
       kind: Rule
       services:
         - name: dev-container
-          port: 6901
+          port: 3000
+  tls: {}
