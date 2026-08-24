@@ -8,15 +8,6 @@
     state: present
     update_cache: no
 
-- name: Create consistent users
-  user:
-    name: "{{ item.name }}"
-    groups: "{{ item.groups }}"
-    shell: /bin/bash
-    append: yes
-    password: "{{ 'password' | password_hash('sha512') }}"
-  loop: "{{ users }}"
-
 - name: Set up authorized keys
   authorized_key:
     user: "{{ item.name }}"

@@ -1,35 +1,24 @@
 # Homelab Security & Network Isolation Policy
 
-## 1. Incident Root Cause Analysis (Password Reset)
-During initial setup tasks (`roles/common/tasks/main.yml`), the Ansible user creation task ran:
-```yaml
-- name: Create consistent users
-  user:
-    name: "{{ item.name }}"
-    groups: "{{ item.groups }}"
-    shell: /bin/bash
-    append: yes
-    password: "{{ 'password' | password_hash('sha512') }}"
-```
-Because the user `nuvhandra` already existed on the laptop (`timemachine`), Ansible's `user` module overwrote the existing system password with the literal hash of `"password"`, locking out your original password. 
+## 1. Incident Root Cause & Prevention
+- **Root Cause**: Previous Ansible tasks managed user creation and overwrote existing system user passwords.
+- **Rule**: Ansible roles will **never** manage system user passwords or overwrite existing user accounts. All authentication must rely solely on pre-configured SSH keys managed manually or via authorized keys without modifying system user passwords.
 
 ---
 
-## 2. Strict SSH Access Control (Client Whitelist)
-To ensure SSH access is allowed **only** from this control workstation (`polaris`):
-1. On each node (`timemachine`, `retropad`), edit `/etc/ssh/sshd_config`:
+## 2. Manual SSH Configuration & Hardening Guide
+SSH configuration and key management are strictly handled manually to prevent automated misconfigurations:
+1. **Disable Password Authentication**: Edit `/etc/ssh/sshd_config`:
    ```sshd
-   AllowUsers nuvhandra@<POLARIS_IP>
+   PasswordAuthentication no
+   PermitRootLogin prohibit-password
    ```
-2. Or use `/etc/hosts.allow` and `/etc/hosts.deny`:
-   - `/etc/hosts.deny`:
-     ```text
-     sshd: ALL
-     ```
-   - `/etc/hosts.allow`:
-     ```text
-     sshd: 192.168.2.93
-     ```
+2. **Strict Client Whitelisting**: Restrict SSH access in `/etc/ssh/sshd_config` or `/etc/hosts.allow`:
+   ```sshd
+   AllowUsers nuvhandra@192.168.2.93
+   ```
+3. **Key Permissions**: Ensure private keys are `0600` and `authorized_keys` are `0600`.
+
 
 ---
 
