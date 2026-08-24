@@ -28,6 +28,14 @@ spec:
               value: "PAPER"
             - name: MEMORY
               value: "2G"
+            - name: ONLINE_MODE
+              value: "FALSE"
+            - name: OPS
+              value: "nuvhandra"
+            - name: WHITELIST
+              value: "nuvhandra"
+            - name: ENABLE_WHITELIST
+              value: "TRUE"
           ports:
             - containerPort: 25565
               name: minecraft
